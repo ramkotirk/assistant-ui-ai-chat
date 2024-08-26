@@ -91,6 +91,14 @@ export type StringsConfig = {
           tooltip?: string | undefined;
         }
       | undefined;
+    addAttachment?:
+      | {
+          tooltip?: string | undefined;
+        }
+      | undefined;
+    removeAttachment?: {
+      tooltip?: string | undefined;
+    };
     input?: {
       placeholder?: string | undefined;
     };
