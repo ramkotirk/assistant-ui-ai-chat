@@ -16,6 +16,7 @@ import {
 import type { ChatModelAdapter, ChatModelRunResult } from "./ChatModelAdapter";
 import { shouldContinue } from "./shouldContinue";
 import { LocalRuntimeOptions } from "./LocalRuntimeOptions";
+import { ThreadRuntimeComposer } from "../utils/ThreadRuntimeComposer";
 
 const CAPABILITIES = Object.freeze({
   switchToBranch: true,
@@ -39,13 +40,9 @@ export class LocalThreadRuntime implements ThreadRuntime {
     return this.repository.getMessages();
   }
 
-  public readonly composer = {
-    text: "",
-    setText: (value: string) => {
-      this.composer.text = value;
-      this.notifySubscribers();
-    },
-  };
+  public readonly composer = new ThreadRuntimeComposer(
+    this.notifySubscribers.bind(this),
+  );
 
   constructor(
     private configProvider: ModelConfigProvider,
